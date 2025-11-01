@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"regexp"
 )
@@ -58,7 +59,11 @@ func (c *HttpClient) Execute() (*APIResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+	defer func() {
+		if err = res.Body.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
