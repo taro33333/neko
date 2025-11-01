@@ -14,7 +14,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Get Next Version TAG
@@ -30,7 +30,7 @@ jobs:
         run: |
           git tag ${{ steps.get-next-version-tag.outputs.tag }}
           git push origin ${{ steps.get-next-version-tag.outputs.tag }}
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           cache: true
